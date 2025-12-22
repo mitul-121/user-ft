@@ -1,0 +1,49 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: pass123
+      MYSQL_DATABASE: testdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - my_network
+
+  nodejs:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nodejs_container
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: mysql 
+      DB_USER: root
+      DB_NAME: testdb
+      DB_PORT: 3306
+    depends_on:
+      - mysql
+    networks:
+      - my_network
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend_container
+    ports:
+      - "3001:80"  
+    depends_on:
+      - nodejs
+    networks:
+      - my_network
+
+volumes:
+  mysql_data:
+  
+networks:
+  my_network:
+    driver: bridge
