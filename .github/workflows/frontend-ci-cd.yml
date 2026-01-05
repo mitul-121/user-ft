@@ -2,7 +2,7 @@ name: CI/CD Pipeline for Node Express App frontend
 on:
   push:
     branches:
-      - '**'
+      - 'master'
 
 jobs:
   test:
