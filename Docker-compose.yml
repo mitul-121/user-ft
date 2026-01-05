@@ -5,7 +5,7 @@ services:
     container_name: mysql_container
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: testdb
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "3307:3306"
     volumes:
@@ -21,10 +21,10 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DB_HOST: mysql 
-      DB_USER: root
-      DB_NAME: testdb
-      DB_PORT: 3306
+      DB_HOST: ${DB_HOST} 
+      DB_USER: ${DB_USER}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
     depends_on:
       - mysql
     networks:
